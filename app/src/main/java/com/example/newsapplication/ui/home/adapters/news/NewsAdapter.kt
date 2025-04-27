@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.newsapplication.databinding.CellNewsItemBinding
+import com.example.newsapplication.databinding.CellNewsItemsBinding
 import com.example.newsapplication.databinding.CellViewAllBinding
 import com.example.newsapplication.models.news.NEWS_ITEM_VIEW_TYPE
 import com.example.newsapplication.models.news.NEWS_VIEW_ALL_VIEW_TYPE
@@ -18,10 +18,11 @@ class NewsAdapter(
 ): Adapter<RecyclerView.ViewHolder>() {
 
     inner class NewsItemViewHolder(
-        private val binding: CellNewsItemBinding):ViewHolder(binding.root){
+        private val binding: CellNewsItemsBinding):ViewHolder(binding.root){
         fun onBinding(item:NewsModel) = binding.apply {
-            textTitle.text = item.title
-            textDescription.text = item.description
+            title.text = item.title
+            newsDate.text = item.description
+            //newsImg.setImageResource(item.)
         }
     }
 
@@ -35,7 +36,7 @@ class NewsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
       return when(viewType){
-           NEWS_ITEM_VIEW_TYPE -> NewsItemViewHolder(CellNewsItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+           NEWS_ITEM_VIEW_TYPE -> NewsItemViewHolder(CellNewsItemsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
            NEWS_VIEW_ALL_VIEW_TYPE -> NewsViewAllViewHolder(CellViewAllBinding.inflate(LayoutInflater.from(parent.context),parent,false))
            else -> throw IllegalArgumentException("illegal type")
        }

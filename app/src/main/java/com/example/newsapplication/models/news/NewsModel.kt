@@ -11,6 +11,7 @@ data class NewsModel(
     val id:Int,
     val title:String,
     val description:String
+
 ):NewsContract {
     override fun provideViewType(): Int  = NEWS_ITEM_VIEW_TYPE
 }
