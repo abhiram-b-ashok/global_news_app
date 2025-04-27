@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.newsapplication.databinding.CellNewsItemsBinding
 import com.example.newsapplication.databinding.CellViewAllBinding
-import com.example.newsapplication.models.news.NEWS_ITEM_VIEW_TYPE
-import com.example.newsapplication.models.news.NEWS_VIEW_ALL_VIEW_TYPE
-import com.example.newsapplication.models.news.NewsContract
-import com.example.newsapplication.models.news.NewsModel
-import com.example.newsapplication.models.news.NewsViewAll
+import com.example.newsapplication.data.models.news.NEWS_ITEM_VIEW_TYPE
+import com.example.newsapplication.data.models.news.NEWS_VIEW_ALL_VIEW_TYPE
+import com.example.newsapplication.data.models.news.NewsContract
+import com.example.newsapplication.data.models.news.NewsModel
+import com.example.newsapplication.data.models.news.NewsViewAll
 
 class NewsAdapter(
     val list: List<NewsContract>

@@ -1,4 +1,4 @@
-package com.example.newsapplication.models.news
+package com.example.newsapplication.data.models.news
 
 const val NEWS_ITEM_VIEW_TYPE = 1
 const val NEWS_VIEW_ALL_VIEW_TYPE = 2

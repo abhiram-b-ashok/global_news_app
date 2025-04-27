@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import com.example.newsapplication.R
 import com.example.newsapplication.databinding.FragmentHomeBinding
-import com.example.newsapplication.models.news.newsList
+import com.example.newsapplication.data.models.news.newsList
 import com.example.newsapplication.ui.home.adapters.news.NewsAdapter
-import com.example.newsapplication.utils.toast
 
 
 class HomeFragment : Fragment() {
