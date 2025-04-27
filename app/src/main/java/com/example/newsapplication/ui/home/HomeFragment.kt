@@ -1,6 +1,7 @@
 package com.example.newsapplication.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.newsapplication.databinding.FragmentHomeBinding
 import com.example.newsapplication.data.models.news.newsList
+import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.repository.home.HomeRepository
 import com.example.newsapplication.ui.home.adapters.news.NewsAdapter
+import com.example.newsapplication.ui.info_dialog.showInfoDialog
 import com.example.newsapplication.utils.toast
 import com.example.newsapplication.viewmodels.home.HomeViewModel
 import com.example.newsapplication.viewmodels.home.HomeViewModelFactory
@@ -52,10 +55,38 @@ class HomeFragment : Fragment() {
         textLayoutToolbarTitle.setOnClickListener {
             toast(viewModel.getUsername())
         }
-
+        observeTopHeadLines()
         viewModel.saveUsername("Abhiram S Nath")
         viewModel.getTopHeadlines()
     }
 
+    private fun observeTopHeadLines(){
+        viewModel.topHeadLinesLiveData.observe(viewLifecycleOwner){
+            when(it){
+
+                is NetworkResult.Success -> {
+                    hideProgressBar()
+                    Log.e("list","<<<<< ${it.data?.articles}")
+                }
+
+                is NetworkResult.Error -> {
+                    hideProgressBar()
+                    showInfoDialog(it.message ?: "Error")
+                }
+
+                is NetworkResult.Loading -> {
+                    showProgressBar()
+                }
+            }
+        }
+    }
+
+    private fun showProgressBar() = binding.apply {
+        progressCircular.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() = binding.apply {
+        progressCircular.visibility = View.GONE
+    }
 
 }
