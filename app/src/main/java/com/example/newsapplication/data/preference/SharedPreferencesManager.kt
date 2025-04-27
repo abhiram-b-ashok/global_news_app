@@ -7,7 +7,7 @@ import androidx.core.content.edit
 object SharedPreferencesManager {
 
     private const val PREFERENCE_NAME: String = "MySharedPrefs"
-    lateinit var preferences: SharedPreferences
+    private lateinit var preferences: SharedPreferences
 
     //method to initialize the sharedPreference
     fun init(context: Context) {
