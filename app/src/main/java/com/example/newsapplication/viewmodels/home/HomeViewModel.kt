@@ -1,7 +1,10 @@
 package com.example.newsapplication.viewmodels.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.newsapplication.repository.home.HomeRepository
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
      val repository: HomeRepository
@@ -15,5 +18,10 @@ class HomeViewModel(
 
     fun getUsername(): String {
         return repository.getUserName()
+    }
+
+    fun getTopHeadlines() = viewModelScope.launch {
+        val response = repository.getTopHeadlines()
+        Log.e("response","<<<<< $response")
     }
 }

@@ -54,6 +54,7 @@ class HomeFragment : Fragment() {
         }
 
         viewModel.saveUsername("Abhiram S Nath")
+        viewModel.getTopHeadlines()
     }
 
 
