@@ -2,7 +2,7 @@ package com.example.newsapplication.data.network
 
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
+//import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
 const val SCHEME = "https"
@@ -28,16 +28,16 @@ object NetworkHandler {
 
     fun init(){
 
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
+//        val loggingInterceptor = HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        }
 
         okHttpClient = OkHttpClient()
            .newBuilder()
            .connectTimeout(30, TimeUnit.SECONDS)
            .readTimeout(30, TimeUnit.SECONDS)
            .writeTimeout(30, TimeUnit.SECONDS)
-           .addInterceptor(loggingInterceptor)
+//           .addInterceptor(loggingInterceptor)
            .build()
     }
 }

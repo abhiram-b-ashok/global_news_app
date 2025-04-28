@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -49,10 +50,11 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.androidx.navigation.fragment.ktx)
-    implementation ("androidx.navigation:navigation-ui-ktx:2.8.9")
-    implementation(libs.material)
-    implementation(libs.okhttp)
-    implementation(libs.logging.interceptor)
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.9")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.6.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
 
 }

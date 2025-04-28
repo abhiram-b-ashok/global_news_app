@@ -15,6 +15,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:clipToOutline="true"
+            android:scaleType="centerInside"
             tools:src ="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="10dp"
@@ -52,13 +53,6 @@
             android:textColor="@color/grey"
             app:layout_constraintStart_toEndOf="@id/newsImg"/>
 
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 </androidx.cardview.widget.CardView>

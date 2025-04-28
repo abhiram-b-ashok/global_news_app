@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsapplication.data.models.TopHeadLinesRootModel
-import com.example.newsapplication.data.models.toTopHeadLinesRootModel
+import com.example.newsapplication.data.models.topheadlines.TopHeadLinesRootModel
+import com.example.newsapplication.data.models.topheadlines.toTopHeadLinesRootModel
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.repository.home.HomeRepository
 import kotlinx.coroutines.launch

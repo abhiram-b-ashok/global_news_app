@@ -75,6 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginStart="7dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/recycler_view_news_type"
             app:layout_constraintTop_toTopOf="parent"
@@ -97,7 +98,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:id="@+id/recycler_view_news_list"
+            android:id="@+id/recycler_view_top_headlines"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 

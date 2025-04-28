@@ -1,4 +1,4 @@
-package com.example.newsapplication.data.models
+package com.example.newsapplication.data.models.topheadlines
 
 import org.json.JSONArray
 import org.json.JSONObject
@@ -19,7 +19,7 @@ data class TopHeadLinesModel(
     val publishedAt: String
 )
 
-fun JSONObject?.toTopHeadLinesRootModel(): TopHeadLinesRootModel{
+fun JSONObject?.toTopHeadLinesRootModel(): TopHeadLinesRootModel {
     return TopHeadLinesRootModel(
         status = this?.optString("status") ?: "",
         totalResults = this?.optInt("totalResults") ?: 0,

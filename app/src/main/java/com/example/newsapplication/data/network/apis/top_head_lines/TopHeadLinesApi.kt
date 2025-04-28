@@ -1,17 +1,24 @@
 package com.example.newsapplication.data.network.apis.top_head_lines
 
+import com.example.newsapplication.data.network.API_KEY
 import com.example.newsapplication.data.network.ApiResponse
+import com.example.newsapplication.data.network.HOST
 import com.example.newsapplication.data.network.NetworkHandler
+import com.example.newsapplication.data.network.SCHEME
 import com.example.newsapplication.data.network.buildUrl
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
+import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONObject
 
+
 suspend fun getApiRequest(
     httpClient: OkHttpClient = NetworkHandler.okHttpClient,
-    country: String = "us"
+    country: String = "us",
+    category: String
+
 ): ApiResponse = withContext(IO) {
 
     var code = 0
@@ -23,6 +30,7 @@ suspend fun getApiRequest(
 
         val url = buildUrl("top-headlines")
             .addQueryParameter("country",country)
+            .addQueryParameter("category",category)
             .build()
 
         val request = Request.Builder()
@@ -46,3 +54,34 @@ suspend fun getApiRequest(
     }
     return@withContext ApiResponse(code, exception, message,data)
 }
+
+
+fun setCategory(selectedNewsTypePosition: Int? = null): String {
+
+    if(selectedNewsTypePosition == 0){
+        return "general"
+    }else if(selectedNewsTypePosition == 1){
+        return "business"
+    }else if(selectedNewsTypePosition == 2){
+        return "entertainment"
+    }
+    else if(selectedNewsTypePosition == 3){
+        return "health"
+    }
+    else if(selectedNewsTypePosition == 4){
+        return "science"
+    }
+    else if(selectedNewsTypePosition == 5){
+        return "sports"
+    }
+    else if(selectedNewsTypePosition == 6){
+        return "technology"
+    }
+    else{
+        return "general"
+    }
+
+
+
+}
+

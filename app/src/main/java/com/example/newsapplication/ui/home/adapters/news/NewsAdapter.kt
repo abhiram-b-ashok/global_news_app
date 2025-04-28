@@ -5,24 +5,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.example.newsapplication.databinding.CellNewsItemsBinding
-import com.example.newsapplication.databinding.CellViewAllBinding
+import com.bumptech.glide.Glide
 import com.example.newsapplication.data.models.news.NEWS_ITEM_VIEW_TYPE
 import com.example.newsapplication.data.models.news.NEWS_VIEW_ALL_VIEW_TYPE
 import com.example.newsapplication.data.models.news.NewsContract
 import com.example.newsapplication.data.models.news.NewsModel
 import com.example.newsapplication.data.models.news.NewsViewAll
+import com.example.newsapplication.databinding.CellTopNewsItemBinding
+import com.example.newsapplication.databinding.CellViewAllBinding
 
 class NewsAdapter(
     val list: List<NewsContract>
 ): Adapter<RecyclerView.ViewHolder>() {
 
     inner class NewsItemViewHolder(
-        private val binding: CellNewsItemsBinding):ViewHolder(binding.root){
+        private val binding: CellTopNewsItemBinding):ViewHolder(binding.root){
         fun onBinding(item:NewsModel) = binding.apply {
-            title.text = item.title
-            newsDate.text = item.description
-            //newsImg.setImageResource(item.)
+            textTitle.text = item.title
+           textDescription.text = item.description
+           Glide.with(imgNews.context).load(item.image).into(imgNews)
         }
     }
 
@@ -36,7 +37,7 @@ class NewsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
       return when(viewType){
-           NEWS_ITEM_VIEW_TYPE -> NewsItemViewHolder(CellNewsItemsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+           NEWS_ITEM_VIEW_TYPE -> NewsItemViewHolder(CellTopNewsItemBinding.inflate(LayoutInflater.from(parent.context),parent,false))
            NEWS_VIEW_ALL_VIEW_TYPE -> NewsViewAllViewHolder(CellViewAllBinding.inflate(LayoutInflater.from(parent.context),parent,false))
            else -> throw IllegalArgumentException("illegal type")
        }
