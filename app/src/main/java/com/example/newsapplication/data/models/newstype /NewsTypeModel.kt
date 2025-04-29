@@ -7,7 +7,7 @@ data class NewsTypeModel (
     )
 
 var newsTypeList = listOf(
-    NewsTypeModel("General"),
+    NewsTypeModel("General", isSelected = true),
     NewsTypeModel("Business"),
     NewsTypeModel("Entertainment"),
     NewsTypeModel("Health"),

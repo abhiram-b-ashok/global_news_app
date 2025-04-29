@@ -1,14 +1,13 @@
 package com.example.newsapplication.ui.home.adapters.topheadlines
 
 import android.view.LayoutInflater
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapplication.data.models.topheadlines.TopHeadLinesModel
 import com.example.newsapplication.databinding.CellTopHeadlinesItemsBinding
 
-class TopHeadlinesAdapter(private val list: List<TopHeadLinesModel>) : RecyclerView.Adapter<TopHeadlinesAdapter.TopHeadlinesViewHolder>()
+class TopHeadlinesAdapter(private val list: List<Any?>) : RecyclerView.Adapter<TopHeadlinesAdapter.TopHeadlinesViewHolder>()
 
 {
       var itemOnclickListener: ((TopHeadLinesModel) -> Unit)? = null
@@ -19,7 +18,7 @@ class TopHeadlinesAdapter(private val list: List<TopHeadLinesModel>) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: TopHeadlinesViewHolder, position: Int) {
-        holder.bind(list[position],itemOnclickListener)
+        holder.bind(list[position] as TopHeadLinesModel,itemOnclickListener)
 
 
     }
@@ -39,6 +38,13 @@ class TopHeadlinesAdapter(private val list: List<TopHeadLinesModel>) : RecyclerV
 
         }
 
+    }
+    fun updateList(newList: List<TopHeadLinesModel>) {
+        (list as? MutableList)?.apply {
+            clear()
+            addAll(newList)
+            notifyDataSetChanged()
+        }
     }
 
 }

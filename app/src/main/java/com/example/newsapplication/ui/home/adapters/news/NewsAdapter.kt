@@ -5,14 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.bumptech.glide.Glide
+import com.example.newsapplication.databinding.CellViewAllBinding
 import com.example.newsapplication.data.models.news.NEWS_ITEM_VIEW_TYPE
 import com.example.newsapplication.data.models.news.NEWS_VIEW_ALL_VIEW_TYPE
 import com.example.newsapplication.data.models.news.NewsContract
 import com.example.newsapplication.data.models.news.NewsModel
 import com.example.newsapplication.data.models.news.NewsViewAll
 import com.example.newsapplication.databinding.CellTopNewsItemBinding
-import com.example.newsapplication.databinding.CellViewAllBinding
 
 class NewsAdapter(
     val list: List<NewsContract>
@@ -22,8 +21,8 @@ class NewsAdapter(
         private val binding: CellTopNewsItemBinding):ViewHolder(binding.root){
         fun onBinding(item:NewsModel) = binding.apply {
             textTitle.text = item.title
-           textDescription.text = item.description
-           Glide.with(imgNews.context).load(item.image).into(imgNews)
+            textDescription.text = item.description
+            //newsImg.setImageResource(item.)
         }
     }
 

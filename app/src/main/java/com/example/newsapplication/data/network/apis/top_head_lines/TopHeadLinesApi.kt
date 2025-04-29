@@ -17,8 +17,7 @@ import org.json.JSONObject
 suspend fun getApiRequest(
     httpClient: OkHttpClient = NetworkHandler.okHttpClient,
     country: String = "us",
-    category: String
-
+    category: String? = null
 ): ApiResponse = withContext(IO) {
 
     var code = 0
@@ -28,10 +27,14 @@ suspend fun getApiRequest(
 
     try {
 
-        val url = buildUrl("top-headlines")
+        val urlBuilder = buildUrl("top-headlines")
             .addQueryParameter("country",country)
-            .addQueryParameter("category",category)
-            .build()
+
+        if (!category.isNullOrEmpty()) {
+            urlBuilder.addQueryParameter("category", category)
+        }
+
+        val url = urlBuilder.build()
 
         val request = Request.Builder()
             .url(url)
@@ -56,32 +59,30 @@ suspend fun getApiRequest(
 }
 
 
+
+
 fun setCategory(selectedNewsTypePosition: Int? = null): String {
 
-    if(selectedNewsTypePosition == 0){
+    if (selectedNewsTypePosition == 0) {
         return "general"
-    }else if(selectedNewsTypePosition == 1){
+    } else if (selectedNewsTypePosition == 1) {
         return "business"
-    }else if(selectedNewsTypePosition == 2){
+    } else if (selectedNewsTypePosition == 2) {
         return "entertainment"
-    }
-    else if(selectedNewsTypePosition == 3){
+    } else if (selectedNewsTypePosition == 3) {
         return "health"
-    }
-    else if(selectedNewsTypePosition == 4){
+    } else if (selectedNewsTypePosition == 4) {
         return "science"
-    }
-    else if(selectedNewsTypePosition == 5){
+    } else if (selectedNewsTypePosition == 5) {
         return "sports"
-    }
-    else if(selectedNewsTypePosition == 6){
+    } else if (selectedNewsTypePosition == 6) {
         return "technology"
-    }
-    else{
+    } else {
         return "general"
     }
-
-
-
 }
+
+
+
+
 

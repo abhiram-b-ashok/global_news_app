@@ -9,6 +9,7 @@ import com.example.newsapplication.data.models.topheadlines.TopHeadLinesRootMode
 import com.example.newsapplication.data.models.topheadlines.toTopHeadLinesRootModel
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.repository.home.HomeRepository
+import com.example.newsapplication.ui.home.adapters.topheadlines.TopHeadlinesAdapter
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -19,6 +20,12 @@ class HomeViewModel(
         NetworkResult.Loading()
     )
     val topHeadLinesLiveData: LiveData<NetworkResult<TopHeadLinesRootModel>> = topHeadLinesMutableLiveData
+    var topHeadlinesRootModel = TopHeadLinesRootModel(
+        status = "",
+        totalResults = 0,
+        articles = emptyList()
+    )
+    val topHeadlinesAdapter = TopHeadlinesAdapter(topHeadlinesRootModel.articles)
 
 
 
@@ -32,12 +39,15 @@ class HomeViewModel(
         return repository.getUserName()
     }
 
-    fun getTopHeadlines() = viewModelScope.launch {
-        val response = repository.getTopHeadlines()
+    fun getTopHeadlines(category: String? = null) = viewModelScope.launch {
+        val response = repository.getTopHeadlines(category= category)
         if (response.exception != null){
             topHeadLinesMutableLiveData.value = NetworkResult.Error(response.message)
         }else{
-            topHeadLinesMutableLiveData.value = NetworkResult.Success(response.data.toTopHeadLinesRootModel())
+            val newData = response.data.toTopHeadLinesRootModel()
+            topHeadlinesRootModel = newData
+            topHeadLinesMutableLiveData.value = NetworkResult.Success(newData)
+            topHeadlinesAdapter.updateList(topHeadlinesRootModel.articles)
         }
     }
 }

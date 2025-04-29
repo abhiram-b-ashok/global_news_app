@@ -10,11 +10,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.newsapplication.databinding.FragmentHomeBinding
 import com.example.newsapplication.data.models.news.newsList
+import com.example.newsapplication.databinding.FragmentHomeBinding
+
 import com.example.newsapplication.data.models.newstype.newsTypeList
 import com.example.newsapplication.data.network.NetworkResult
-import com.example.newsapplication.data.network.apis.top_head_lines.getApiRequest
 import com.example.newsapplication.data.network.apis.top_head_lines.setCategory
 import com.example.newsapplication.repository.home.HomeRepository
 import com.example.newsapplication.ui.home.adapters.news.NewsAdapter
@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var topHeadlinesAdapter: TopHeadlinesAdapter
     private lateinit var newsTypeAdapter: NewsTypeAdapter
-    var selectedNewsTypePosition = 0
+    var selectedCategory: String? = null
     private val viewModel by viewModels<HomeViewModel>(
         factoryProducer = {
             HomeViewModelFactory(HomeRepository())
@@ -55,6 +55,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             initViews()
+
         }
     }
 
@@ -67,15 +68,15 @@ class HomeFragment : Fragment() {
         recyclerViewNewsType.adapter = newsTypeAdapter.apply {
             onTypeSelected = { position, item ->
                 item.isSelected = true
-                var selected = setCategory(position)
-
 
                 newsTypeList.forEach {
                     if (it != item) {
                         it.isSelected = false
                     }
+                    selectedCategory = setCategory(position)
                 }
                 newsTypeAdapter.notifyDataSetChanged()
+                viewModel.getTopHeadlines(selectedCategory)
             }
 
         }
@@ -88,7 +89,7 @@ class HomeFragment : Fragment() {
         }
         observeTopHeadLines()
         viewModel.saveUsername("Abhiram B")
-        viewModel.getTopHeadlines()
+        viewModel.getTopHeadlines(selectedCategory)
     }
 
     private fun observeTopHeadLines() {

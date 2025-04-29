@@ -16,7 +16,7 @@ class HomeRepository {
         return SharedPreferencesManager.getString(USERNAME_KEY,"")
     }
 
-    suspend fun getTopHeadlines(): ApiResponse{
-        return getApiRequest()
+    suspend fun getTopHeadlines(category: String? = null): ApiResponse{
+        return getApiRequest(category = category)
     }
 }
