@@ -17,6 +17,11 @@ import com.example.newsapplication.databinding.CellTopNewsItemBinding
 class TopNewsAdapter(
     private val list: List<NewsContract>
 ): Adapter<RecyclerView.ViewHolder>() {
+    companion object{
+        const val NEWS_ITEM_VIEW_TYPE = 1
+        const val NEWS_VIEW_ALL_VIEW_TYPE = 2
+    }
+    var  onItemClickListener:((NewsViewAll)->Unit)? = null
 
     inner class NewsItemViewHolder(
         private val binding: CellTopNewsItemBinding):ViewHolder(binding.root){
@@ -30,7 +35,11 @@ class TopNewsAdapter(
     inner class NewsViewAllViewHolder(
        private val binding: CellViewAllBinding
     ):ViewHolder(binding.root){
-        fun onBind(item:NewsViewAll) = binding.apply {
+        fun onBind(item:NewsViewAll,onItemClickListener:((NewsViewAll)->Unit)? = null) = binding.apply {
+            textTitle.text = item.navigationIdentifier
+            root.setOnClickListener {
+                onItemClickListener?.invoke(item)
+            }
 
         }
     }
@@ -50,7 +59,7 @@ class TopNewsAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when(getItemViewType(position)){
             NEWS_ITEM_VIEW_TYPE -> (holder as NewsItemViewHolder).onBinding(list[position] as NewsModel)
-            NEWS_VIEW_ALL_VIEW_TYPE -> (holder as NewsViewAllViewHolder).onBind(list[position] as NewsViewAll)
+            NEWS_VIEW_ALL_VIEW_TYPE -> (holder as NewsViewAllViewHolder).onBind(list[position] as NewsViewAll,onItemClickListener)
         }
     }
 

@@ -13,7 +13,8 @@
         <action
             android:id="@+id/action_home_to_testFragment"
             app:destination="@id/testFragment" />
-        <action android:id="@+id/action_home_to_viewAllFragment"
+        <action
+            android:id="@+id/action_home_to_viewAllFragment"
             app:destination="@id/viewAllFragment" />
     </fragment>
     <fragment
@@ -36,9 +37,14 @@
         android:name="com.example.newsapplication.ui.test.TestFragment"
         android:label="fragment_test"
         tools:layout="@layout/fragment_test" />
+
+    <fragment
+        android:id="@+id/everythingFragment"
+        android:name="com.example.newsapplication.ui.everything.EverythingFragment"
+        android:label="fragment_everything"
+        tools:layout="@layout/fragment_everything" />
     <fragment
         android:id="@+id/viewAllFragment"
-        android:name="com.example.newsapplication.ui.ViewAllFragment"
-        android:label="fragment_view_all"
-        tools:layout="@layout/fragment_view_all" />
+        android:name="com.example.newsapplication.ui.viewall.ViewAllFragment"
+        android:label="ViewAllFragment" />
 </navigation>

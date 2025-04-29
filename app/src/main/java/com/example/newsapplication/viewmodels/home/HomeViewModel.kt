@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapplication.data.models.topheadlines.TopHeadLinesRootModel
 import com.example.newsapplication.data.models.topheadlines.toTopHeadLinesRootModel
+import com.example.newsapplication.data.models.topnews.NewsContract
+import com.example.newsapplication.data.models.topnews.NewsViewAll
 import com.example.newsapplication.data.models.topnews.TopNewsApiRootModel
 import com.example.newsapplication.data.models.topnews.toTopNewsModel
 import com.example.newsapplication.data.network.NetworkResult
@@ -40,6 +42,9 @@ class HomeViewModel(
     )
 
     private val topHeadlinesAdapter = TopHeadlinesAdapter(topHeadlinesRootModel.articles)
+    val newsList: MutableList<NewsContract> = topNewsRootModel.articles.toMutableList()
+
+
 
 
 
@@ -73,9 +78,7 @@ class HomeViewModel(
         }else{
             topNewsRootModel = response.data.toTopNewsModel()
             topNewsMutableLiveData.value = NetworkResult.Success(topNewsRootModel)
+            newsList.add(NewsViewAll(navigationIdentifier = "View All"))
             }
     }
-
-
-
 }

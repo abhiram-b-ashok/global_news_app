@@ -42,6 +42,7 @@ fun JSONArray?.toNewsModel(): List<NewsModel>{
     return list
 }
 
+
 interface NewsContract{
     fun provideViewType():Int
 }
@@ -61,5 +62,6 @@ data class NewsViewAll(
 ):NewsContract {
     override fun provideViewType(): Int = NEWS_VIEW_ALL_VIEW_TYPE
 }
+
 
 

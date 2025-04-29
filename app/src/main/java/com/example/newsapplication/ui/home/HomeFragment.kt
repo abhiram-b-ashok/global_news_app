@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.newsapplication.databinding.FragmentHomeBinding
 
 import com.example.newsapplication.data.models.newstype.newsTypeList
+import com.example.newsapplication.data.models.topnews.NewsContract
+import com.example.newsapplication.data.models.topnews.NewsViewAll
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.data.network.apis.top_head_lines.setCategory
 import com.example.newsapplication.repository.home.HomeRepository
@@ -76,6 +78,11 @@ class HomeFragment : Fragment() {
             }
 
         }
+        topNewsAdapter.apply {
+            onItemClickListener = {
+                findNavController().navigate(HomeFragmentDirections.actionHomeToViewAllFragment())
+            }
+        }
 
         imgSearch.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeToTestFragment())
@@ -96,7 +103,6 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Success -> {
                     hideProgressBar()
-                    Log.e("list", "<<<<< ${it.data?.articles}")
                     topHeadlinesAdapter = TopHeadlinesAdapter(it.data?.articles ?: emptyList())
                     binding.recyclerViewTopHeadlines.adapter = topHeadlinesAdapter
                     binding.recyclerViewTopHeadlines.visibility = View.VISIBLE
@@ -123,10 +129,14 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Success -> {
                     hideProgressBar()
+                    val articles = it.data?.articles ?: emptyList()
+                    val newsList: MutableList<NewsContract> = articles.toMutableList()
+                    newsList.add(NewsViewAll(navigationIdentifier = "View All"))
                     Log.e("list", "<<<<< ${it.data?.articles}")
-                    topNewsAdapter = TopNewsAdapter(it.data?.articles ?: emptyList())
+                    topNewsAdapter = TopNewsAdapter(newsList)
                     binding.recyclerViewNews.adapter = topNewsAdapter
                     binding.recyclerViewNews.visibility = View.VISIBLE
+
 
                 }
 
