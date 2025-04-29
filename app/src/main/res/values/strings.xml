@@ -12,4 +12,13 @@
     <string name="todo">TODO</string>
     <string name="ok">Ok</string>
     <string name="all_headlines">All HeadLines</string>
+    <string name="change_your_language">Change Your Language</string>
+    <string name="select_country">Select Country</string>
+    <string name="us">US</string>
+    <string name="india">India</string>
+    <string name="uk">UK</string>
+    <string name="english">English</string>
+    <string name="spanish">Spanish</string>
+    <string name="french">French</string>
+    <string name="select_language">Select Language</string>
 </resources>

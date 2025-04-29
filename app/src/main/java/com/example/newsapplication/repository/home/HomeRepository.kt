@@ -1,6 +1,7 @@
 package com.example.newsapplication.repository.home
 
 import com.example.newsapplication.data.network.ApiResponse
+import com.example.newsapplication.data.network.apis.everythingapi.getEverythingApi
 import com.example.newsapplication.data.network.apis.top_head_lines.getApiRequest
 import com.example.newsapplication.data.preference.SharedPreferencesManager
 import com.example.newsapplication.data.preference.USERNAME_KEY
@@ -19,4 +20,8 @@ class HomeRepository {
     suspend fun getTopHeadlines(category: String? = null): ApiResponse{
         return getApiRequest(category = category)
     }
+    suspend fun getTopNews(): ApiResponse{
+        return getEverythingApi()
+    }
+
 }

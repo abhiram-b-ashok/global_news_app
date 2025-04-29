@@ -36,6 +36,8 @@
                 android:fontFamily="sans-serif-condensed-medium"
                 android:paddingHorizontal="5dp"
                 android:textColor="@color/green"
+                android:maxLines="1"
+                android:maxLength="20"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toTopOf="@+id/text_description"
                 app:layout_constraintStart_toStartOf="parent"

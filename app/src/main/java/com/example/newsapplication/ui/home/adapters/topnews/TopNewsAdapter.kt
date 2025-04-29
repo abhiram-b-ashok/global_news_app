@@ -1,20 +1,21 @@
-package com.example.newsapplication.ui.home.adapters.news
+package com.example.newsapplication.ui.home.adapters.topnews
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.example.newsapplication.databinding.CellViewAllBinding
-import com.example.newsapplication.data.models.news.NEWS_ITEM_VIEW_TYPE
-import com.example.newsapplication.data.models.news.NEWS_VIEW_ALL_VIEW_TYPE
-import com.example.newsapplication.data.models.news.NewsContract
-import com.example.newsapplication.data.models.news.NewsModel
-import com.example.newsapplication.data.models.news.NewsViewAll
+import com.example.newsapplication.data.models.topnews.NEWS_ITEM_VIEW_TYPE
+import com.example.newsapplication.data.models.topnews.NEWS_VIEW_ALL_VIEW_TYPE
+import com.example.newsapplication.data.models.topnews.NewsContract
+import com.example.newsapplication.data.models.topnews.NewsModel
+import com.example.newsapplication.data.models.topnews.NewsViewAll
 import com.example.newsapplication.databinding.CellTopNewsItemBinding
 
-class NewsAdapter(
-    val list: List<NewsContract>
+class TopNewsAdapter(
+    private val list: List<NewsContract>
 ): Adapter<RecyclerView.ViewHolder>() {
 
     inner class NewsItemViewHolder(
@@ -22,7 +23,7 @@ class NewsAdapter(
         fun onBinding(item:NewsModel) = binding.apply {
             textTitle.text = item.title
             textDescription.text = item.description
-            //newsImg.setImageResource(item.)
+            Glide.with(imgNews).load(item.image).into(imgNews)
         }
     }
 

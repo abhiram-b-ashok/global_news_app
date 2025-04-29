@@ -5,6 +5,7 @@
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
     app:cardElevation="4dp"
+    app:cardCornerRadius="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +18,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:clipToOutline="true"
+            android:scaleType="fitXY"
             tools:src ="@drawable/ic_launcher_background"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="10dp"
@@ -26,7 +28,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="10dp"
             android:id="@+id/save_button"
-            android:src="@drawable/icons8_save_50_black"
+            android:src="@drawable/icons8_save_50_unfilled"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>

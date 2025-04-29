@@ -1,31 +1,45 @@
 package com.example.newsapplication.viewmodels.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsapplication.data.models.topheadlines.TopHeadLinesRootModel
 import com.example.newsapplication.data.models.topheadlines.toTopHeadLinesRootModel
+import com.example.newsapplication.data.models.topnews.TopNewsApiRootModel
+import com.example.newsapplication.data.models.topnews.toTopNewsModel
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.repository.home.HomeRepository
 import com.example.newsapplication.ui.home.adapters.topheadlines.TopHeadlinesAdapter
+import com.example.newsapplication.ui.home.adapters.topnews.TopNewsAdapter
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-     val repository: HomeRepository
+    private val repository: HomeRepository
 ): ViewModel() {
 
-    val topHeadLinesMutableLiveData = MutableLiveData<NetworkResult<TopHeadLinesRootModel>>(
+    private val topHeadLinesMutableLiveData = MutableLiveData<NetworkResult<TopHeadLinesRootModel>>(
         NetworkResult.Loading()
     )
+    private val topNewsMutableLiveData = MutableLiveData<NetworkResult<TopNewsApiRootModel>>(
+        NetworkResult.Loading()
+    )
+
     val topHeadLinesLiveData: LiveData<NetworkResult<TopHeadLinesRootModel>> = topHeadLinesMutableLiveData
-    var topHeadlinesRootModel = TopHeadLinesRootModel(
+    val topNewsLiveData: LiveData<NetworkResult<TopNewsApiRootModel>> = topNewsMutableLiveData
+
+    private var topHeadlinesRootModel = TopHeadLinesRootModel(
         status = "",
         totalResults = 0,
         articles = emptyList()
     )
-    val topHeadlinesAdapter = TopHeadlinesAdapter(topHeadlinesRootModel.articles)
+    private var topNewsRootModel = TopNewsApiRootModel(
+        status = "",
+        totalResults = 0,
+        articles = emptyList()
+    )
+
+    private val topHeadlinesAdapter = TopHeadlinesAdapter(topHeadlinesRootModel.articles)
 
 
 
@@ -40,6 +54,7 @@ class HomeViewModel(
     }
 
     fun getTopHeadlines(category: String? = null) = viewModelScope.launch {
+        topHeadLinesMutableLiveData.value = NetworkResult.Loading()
         val response = repository.getTopHeadlines(category= category)
         if (response.exception != null){
             topHeadLinesMutableLiveData.value = NetworkResult.Error(response.message)
@@ -50,4 +65,17 @@ class HomeViewModel(
             topHeadlinesAdapter.updateList(topHeadlinesRootModel.articles)
         }
     }
+    fun getTopNews() =viewModelScope.launch {
+        topNewsMutableLiveData.value = NetworkResult.Loading()
+        val response = repository.getTopNews()
+        if (response.exception != null){
+            topNewsMutableLiveData.value = NetworkResult.Error(response.message)
+        }else{
+            topNewsRootModel = response.data.toTopNewsModel()
+            topNewsMutableLiveData.value = NetworkResult.Success(topNewsRootModel)
+            }
+    }
+
+
+
 }

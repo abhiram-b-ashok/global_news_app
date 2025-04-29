@@ -8,7 +8,7 @@
         android:icon="@drawable/icons8_discover_60_black"/>
     <item android:id="@+id/saved"
         android:title="@string/saved"
-        android:icon="@drawable/icons8_save_50_black"/>
+        android:icon="@drawable/icons8_save_50_filled"/>
     <item android:id="@+id/settings"
         android:title="@string/settings"
         android:icon="@drawable/icons8_settings_50_black"/>
