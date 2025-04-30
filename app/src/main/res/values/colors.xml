@@ -4,4 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="green">#429445</color>
     <color name="grey">#7B7979</color>
+    <color name="shimmerColor">#C2C2C2</color>
 </resources>

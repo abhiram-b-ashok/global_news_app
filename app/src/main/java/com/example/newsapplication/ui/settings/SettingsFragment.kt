@@ -32,9 +32,17 @@ class SettingsFragment : Fragment() {
         binding.etDropdownCountry.setOnClickListener {
             countryBottomSheet.show(parentFragmentManager, "countryBottomSheet")
         }
-    }
-//fun setSelectedLanguage(value: String) {
+        childFragmentManager.setFragmentResultListener("requestKey", this) { key, bundle ->
+            val result = bundle.getString("data")
+
+        }
+
+        //fun setSelectedLanguage(value: String) {
 //        binding.etDropdownLanguage.text = value
 //    }
+        fun setSelectedLanguage(value: String) {
+            binding.etDropdownLanguage.text = Editable.Factory.getInstance().newEditable(value)
+        }
 
+    }
 }

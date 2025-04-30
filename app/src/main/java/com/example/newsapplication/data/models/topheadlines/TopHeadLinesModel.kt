@@ -16,8 +16,10 @@ data class TopHeadLinesModel(
     val description: String,
     val url: String,
     val urlToImage: String,
-    val publishedAt: String
-)
+    val publishedAt: String,
+    var isSaved: Boolean = false,
+
+    )
 
 fun JSONObject?.toTopHeadLinesRootModel(): TopHeadLinesRootModel {
     return TopHeadLinesRootModel(

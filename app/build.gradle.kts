@@ -55,5 +55,6 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
 
 }

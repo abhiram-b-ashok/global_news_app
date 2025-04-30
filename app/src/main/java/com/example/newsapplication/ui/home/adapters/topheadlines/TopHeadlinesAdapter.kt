@@ -11,6 +11,7 @@ class TopHeadlinesAdapter(private val list: List<Any?>) : RecyclerView.Adapter<T
 
 {
       var itemOnclickListener: ((TopHeadLinesModel) -> Unit)? = null
+    var onSavedClickListener: ((Int,TopHeadLinesModel) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TopHeadlinesViewHolder {
 
         val binding = CellTopHeadlinesItemsBinding.inflate(LayoutInflater.from(parent.context),parent,false)
@@ -18,7 +19,7 @@ class TopHeadlinesAdapter(private val list: List<Any?>) : RecyclerView.Adapter<T
     }
 
     override fun onBindViewHolder(holder: TopHeadlinesViewHolder, position: Int) {
-        holder.bind(list[position] as TopHeadLinesModel,itemOnclickListener)
+        holder.bind(list[position] as TopHeadLinesModel,itemOnclickListener,onSavedClickListener)
 
 
     }
@@ -27,11 +28,19 @@ class TopHeadlinesAdapter(private val list: List<Any?>) : RecyclerView.Adapter<T
         return list.size
     }
     class TopHeadlinesViewHolder(val binding: CellTopHeadlinesItemsBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: TopHeadLinesModel, itemOnclickListener: ((TopHeadLinesModel) -> Unit)?) {
+        fun bind(item: TopHeadLinesModel, itemOnclickListener: ((TopHeadLinesModel) -> Unit)? , onSavedClickListener: ((Int,TopHeadLinesModel) -> Unit)?) {
             binding.apply {
                 title.text = item.title
                 newsDate.text = item.publishedAt
                 Glide.with(newsImg.context).load(item.urlToImage).into(newsImg)
+                if (item.isSaved) {
+                    saveButton.setImageResource(com.example.newsapplication.R.drawable.icons8_save_50_filled)
+                } else {
+                    saveButton.setImageResource(com.example.newsapplication.R.drawable.icons8_save_50_unfilled)
+                }
+                saveButton.setOnClickListener{
+                    onSavedClickListener?.invoke(adapterPosition,item)
+                }
             }.root.setOnClickListener {
                 itemOnclickListener?.invoke(item)
             }
