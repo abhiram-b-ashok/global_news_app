@@ -54,15 +54,20 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launch {
             initViews()
+            newsTypeLoad()
 
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    private suspend fun initViews() = binding.apply {
 
+    @SuppressLint("NotifyDataSetChanged")
+    private suspend fun newsTypeLoad()
+    {
+        showNewsTypeProgressBar()
+        binding.recyclerViewNewsType.visibility = View.GONE
+        delay(2000)
         newsTypeAdapter = NewsTypeAdapter(newsTypeList)
-        recyclerViewNewsType.adapter = newsTypeAdapter.apply {
+        binding.recyclerViewNewsType.adapter = newsTypeAdapter.apply {
             onTypeSelected = { position, item ->
                 item.isSelected = true
 
@@ -77,6 +82,13 @@ class HomeFragment : Fragment() {
             }
 
         }
+        hideNewsTypeProgressBar()
+        binding.recyclerViewNewsType.visibility = View.VISIBLE
+
+    }
+
+
+    private fun initViews() = binding.apply {
 
         imgSearch.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionHomeToTestFragment())
@@ -90,7 +102,7 @@ class HomeFragment : Fragment() {
         viewModel.getTopHeadlines(selectedCategory)
         viewModel.getTopNews()
     }
-
+    @SuppressLint("NotifyDataSetChanged")
     private fun observeTopHeadLines() {
         viewModel.topHeadLinesLiveData.observe(viewLifecycleOwner) {
             when (it) {
@@ -120,8 +132,8 @@ class HomeFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    hideProgressBar()
-                    showInfoDialog(it.message ?: "Error")
+                    showProgressBar()
+                    showInfoDialog(it.message ?: "Something went wrong")
                 }
 
                 is NetworkResult.Loading -> {
@@ -157,8 +169,8 @@ class HomeFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    hideNewsTypeProgressBar()
-                    showInfoDialog(it.message ?: "Error")
+                    showNewsTypeProgressBar()
+                    showInfoDialog(it.message ?: "Something went wrong")
                 }
 
                 is NetworkResult.Loading -> {
@@ -171,19 +183,27 @@ class HomeFragment : Fragment() {
 
 
     private fun showProgressBar() = binding.apply {
-        progressCircular.visibility = View.VISIBLE
+        shimmerTopNewsLayout.visibility = View.VISIBLE
     }
 
     private fun hideProgressBar() = binding.apply {
-        progressCircular.visibility = View.GONE
+        shimmerTopNewsLayout.visibility = View.GONE
     }
 
   private fun showNewsTypeProgressBar() = binding.apply {
-        shimmerLayout.visibility = View.VISIBLE
+        shimmerNewsTypeLayout.visibility = View.VISIBLE
     }
 
     private fun hideNewsTypeProgressBar() = binding.apply {
-        shimmerLayout.visibility = View.GONE
+        shimmerNewsTypeLayout.visibility = View.GONE
+    }
+
+    private fun showNewsProgressBar() = binding.apply {
+        shimmerNewsLayout.visibility = View.VISIBLE
+
+    }
+    private fun hideNewsProgressBar() = binding.apply {
+        shimmerNewsLayout.visibility = View.GONE
     }
 
 

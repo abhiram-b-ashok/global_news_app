@@ -73,7 +73,7 @@
 <!--        android:visibility="gone"-->
 <!--        />-->
     <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_layout"
+        android:id="@+id/shimmer_top_news_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -115,6 +115,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_news_type_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+                <include layout="@layout/shimmer_cell_news_type" />
+                <include layout="@layout/shimmer_cell_news_type" />
+                <include layout="@layout/shimmer_cell_news_type" />
+                <include layout="@layout/shimmer_cell_news_type" />
+                <include layout="@layout/shimmer_cell_news_type" />
+                <include layout="@layout/shimmer_cell_news_type" />
+                <include layout="@layout/shimmer_cell_news_type" />
+            </LinearLayout>
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -126,6 +149,29 @@
         android:paddingBottom="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/news_type_filter_layout">
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_news_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:visibility="visible">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:layout_height="wrap_content">
+                <include layout="@layout/shimmer_cell_news" />
+                <include layout="@layout/shimmer_cell_news" />
+                <include layout="@layout/shimmer_cell_news" />
+                <include layout="@layout/shimmer_cell_news" />
+                <include layout="@layout/shimmer_cell_news" />
+                <include layout="@layout/shimmer_cell_news" />
+            </LinearLayout>
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -138,17 +184,17 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ProgressBar
-        android:id="@+id/progress_circular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:indeterminateTint="@color/green"
-        android:visibility="gone"
-        />
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_circular"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        android:indeterminateTint="@color/green"-->
+<!--        android:visibility="gone"-->
+<!--        />-->
 
 
 

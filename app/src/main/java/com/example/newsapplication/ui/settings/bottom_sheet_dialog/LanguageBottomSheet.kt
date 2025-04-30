@@ -13,7 +13,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class LanguageBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: LanguageBottomSheetBinding
     private lateinit var adapter: LanguageAdapter
-    var selectedLanguage :String? = null
+    var onLanguageSelected: ((LanguageModel) -> Unit)? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,19 +45,13 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
 
         adapter = LanguageAdapter(languageList)
         binding.languagesRecycler.adapter = adapter
-        adapter.onItemClicked = { selected ->
+        adapter.onItemClicked = { selectedLanguage ->
             languageList.forEach {
-                it.isSelected = it == selected
-                selectedLanguage = it.languageCode
+                it.isSelected = it == selectedLanguage
             }
-
-
             adapter.notifyDataSetChanged()
+            onLanguageSelected?.invoke(selectedLanguage)
             dismiss()
-
         }
-
     }
-
-
 }

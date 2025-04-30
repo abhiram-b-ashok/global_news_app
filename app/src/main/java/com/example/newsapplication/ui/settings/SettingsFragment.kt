@@ -1,12 +1,10 @@
 package com.example.newsapplication.ui.settings
 
 import android.os.Bundle
-import android.text.Editable
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.newsapplication.R
 import com.example.newsapplication.databinding.FragmentSettingsBinding
 import com.example.newsapplication.ui.settings.bottom_sheet_dialog.CountryBottomSheet
 import com.example.newsapplication.ui.settings.bottom_sheet_dialog.LanguageBottomSheet
@@ -28,21 +26,15 @@ class SettingsFragment : Fragment() {
 
         binding.etDropdownLanguage.setOnClickListener {
             languageBottomSheet.show(parentFragmentManager, "languageBottomSheet")
+            languageBottomSheet.onLanguageSelected = { selected ->
+                binding.etDropdownLanguage.setText(selected.languageName)
+            }
         }
         binding.etDropdownCountry.setOnClickListener {
             countryBottomSheet.show(parentFragmentManager, "countryBottomSheet")
+            countryBottomSheet.onCountrySelected = { selected ->
+                binding.etDropdownCountry.setText(selected.countryName)
+            }
         }
-        childFragmentManager.setFragmentResultListener("requestKey", this) { key, bundle ->
-            val result = bundle.getString("data")
-
-        }
-
-        //fun setSelectedLanguage(value: String) {
-//        binding.etDropdownLanguage.text = value
-//    }
-        fun setSelectedLanguage(value: String) {
-            binding.etDropdownLanguage.text = Editable.Factory.getInstance().newEditable(value)
-        }
-
     }
 }
