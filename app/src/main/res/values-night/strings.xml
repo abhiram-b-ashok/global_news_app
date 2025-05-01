@@ -16,4 +16,5 @@
     <string name="spanish">Spanish</string>
     <string name="french">French</string>
     <string name="select_language">Select Language</string>
+    <string name="news_image">News Image</string>
 </resources>

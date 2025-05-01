@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapplication.data.models.topheadlines.TopHeadLinesModel
 import com.example.newsapplication.databinding.CellTopHeadlinesItemsBinding
+import com.example.newsapplication.utils.loadCellImage
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class TopHeadlinesAdapter(private val list: List<Any?>) : RecyclerView.Adapter<TopHeadlinesAdapter.TopHeadlinesViewHolder>()
 
@@ -31,8 +35,13 @@ class TopHeadlinesAdapter(private val list: List<Any?>) : RecyclerView.Adapter<T
         fun bind(item: TopHeadLinesModel, itemOnclickListener: ((TopHeadLinesModel) -> Unit)? , onSavedClickListener: ((Int,TopHeadLinesModel) -> Unit)?) {
             binding.apply {
                 title.text = item.title
-                newsDate.text = item.publishedAt
-                Glide.with(newsImg.context).load(item.urlToImage).into(newsImg)
+                val rawDate = item.publishedAt
+                val parsedDate = OffsetDateTime.parse(rawDate);
+                val digitalDate = DateTimeFormatter.ofPattern("MMM dd, uuuu", Locale.ENGLISH);
+                val formattedDate = digitalDate.format(parsedDate)
+                newsDate.text =formattedDate
+                newsImg.loadCellImage(item.urlToImage)
+
                 if (item.isSaved) {
                     saveButton.setImageResource(com.example.newsapplication.R.drawable.icons8_save_50_filled)
                 } else {

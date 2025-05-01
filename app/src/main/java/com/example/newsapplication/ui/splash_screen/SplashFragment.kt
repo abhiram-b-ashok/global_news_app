@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.newsapplication.R
 import com.example.newsapplication.databinding.FragmentSplashBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -25,12 +27,14 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in)
+        binding.textSplashTitle.startAnimation(animation)
         lifecycleScope.launch {
             goToHome()
         }
     }
     private suspend fun goToHome() {
-        delay(2000)
+        delay(2500)
         findNavController().navigate(SplashFragmentDirections.actionSplashFragmentToHomeFragment())
     }
 

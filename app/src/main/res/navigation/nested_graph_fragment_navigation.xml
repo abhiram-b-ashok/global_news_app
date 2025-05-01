@@ -10,15 +10,13 @@
         android:name="com.example.newsapplication.ui.home.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
-        <action
-            android:id="@+id/action_home_to_testFragment"
-            app:destination="@id/testFragment" />
-        <action
-            android:id="@+id/action_home_to_viewAllFragment"
-            app:destination="@id/viewAllFragment" />
+
         <action
             android:id="@+id/action_home_to_everythingFragment"
             app:destination="@id/everythingFragment" />
+        <action
+            android:id="@+id/action_home_to_discover"
+            app:destination="@id/discover" />
     </fragment>
     <fragment
         android:id="@+id/discover"
@@ -29,25 +27,33 @@
         android:id="@+id/settings"
         android:name="com.example.newsapplication.ui.settings.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settings_to_home"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_settings_to_discover"
+            app:destination="@id/discover" />
+    </fragment>
     <fragment
         android:id="@+id/saved"
         android:name="com.example.newsapplication.ui.saved.SavedNewsFragment"
         android:label="fragment_saved_news"
-        tools:layout="@layout/fragment_saved_news" />
-    <fragment
-        android:id="@+id/testFragment"
-        android:name="com.example.newsapplication.ui.test.TestFragment"
-        android:label="fragment_test"
-        tools:layout="@layout/fragment_test" />
+        tools:layout="@layout/fragment_saved_news" >
+        <action
+            android:id="@+id/action_saved_to_home"
+            app:destination="@id/home" />
+        <action
+            android:id="@+id/action_saved_to_discover"
+            app:destination="@id/discover" />
+        <action
+            android:id="@+id/action_saved_to_discover2"
+            app:destination="@id/discover" />
+    </fragment>
 
     <fragment
         android:id="@+id/everythingFragment"
         android:name="com.example.newsapplication.ui.everything.EverythingFragment"
         android:label="fragment_everything"
         tools:layout="@layout/fragment_everything" />
-    <fragment
-        android:id="@+id/viewAllFragment"
-        android:name="com.example.newsapplication.ui.viewall.ViewAllFragment"
-        android:label="ViewAllFragment" />
 </navigation>

@@ -8,6 +8,10 @@ import com.bumptech.glide.Glide
 import com.example.newsapplication.R
 import com.example.newsapplication.data.models.everything.EverythingModel
 import com.example.newsapplication.databinding.CellEverythingItemsBinding
+import com.example.newsapplication.utils.loadCellImage
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Adapter<EverythingAdapter.EverythingViewHolder> () {
 //    var onItemClickListener: ((EverythingModel) -> Unit)? = null
@@ -30,8 +34,12 @@ class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Ad
         fun bind(item: EverythingModel,  onSaveClickListener: ((EverythingModel,Int) -> Unit)?){
             binding.apply {
                 title.text = item.title
-                newsDate.text = item.publishedAt
-                Glide.with(root.context).load(item.urlToImage).into(newsImg)
+                val rawDate = item.publishedAt
+                val parsedDate = OffsetDateTime.parse(rawDate);
+                val digitalDate = DateTimeFormatter.ofPattern("MMM dd, uuuu", Locale.ENGLISH);
+                val formattedDate = digitalDate.format(parsedDate)
+                newsDate.text =formattedDate
+                newsImg.loadCellImage(item.urlToImage)
 
                 if (item.isSaved) {
                     saveButton.setImageResource(R.drawable.icons8_save_50_filled)

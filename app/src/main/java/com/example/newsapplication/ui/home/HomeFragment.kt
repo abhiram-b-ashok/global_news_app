@@ -3,24 +3,27 @@ package com.example.newsapplication.ui.home
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.newsapplication.databinding.FragmentHomeBinding
 import com.example.newsapplication.data.models.newstype.newsTypeList
 import com.example.newsapplication.data.models.topnews.NewsContract
 import com.example.newsapplication.data.models.topnews.NewsViewAll
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.data.network.apis.top_head_lines.setCategory
+import com.example.newsapplication.databinding.FragmentHomeBinding
 import com.example.newsapplication.repository.home.HomeRepository
-import com.example.newsapplication.ui.home.adapters.topnews.TopNewsAdapter
 import com.example.newsapplication.ui.home.adapters.newstype.NewsTypeAdapter
 import com.example.newsapplication.ui.home.adapters.topheadlines.TopHeadlinesAdapter
+import com.example.newsapplication.ui.home.adapters.topnews.TopNewsAdapter
 import com.example.newsapplication.ui.info_dialog.showInfoDialog
+import com.example.newsapplication.utils.errorLog
+import com.example.newsapplication.utils.hide
+import com.example.newsapplication.utils.show
 import com.example.newsapplication.utils.toast
 import com.example.newsapplication.viewmodels.home.HomeViewModel
 import com.example.newsapplication.viewmodels.home.HomeViewModelFactory
@@ -65,7 +68,7 @@ class HomeFragment : Fragment() {
     {
         showNewsTypeProgressBar()
         binding.recyclerViewNewsType.visibility = View.GONE
-        delay(2000)
+        delay(1000)
         newsTypeAdapter = NewsTypeAdapter(newsTypeList)
         binding.recyclerViewNewsType.adapter = newsTypeAdapter.apply {
             onTypeSelected = { position, item ->
@@ -91,7 +94,7 @@ class HomeFragment : Fragment() {
     private fun initViews() = binding.apply {
 
         imgSearch.setOnClickListener {
-            findNavController().navigate(HomeFragmentDirections.actionHomeToTestFragment())
+            findNavController().navigate(HomeFragmentDirections.actionHomeToDiscover())
         }
         textLayoutToolbarTitle.setOnClickListener {
             toast(viewModel.getUsername())
@@ -108,7 +111,7 @@ class HomeFragment : Fragment() {
             when (it) {
 
                 is NetworkResult.Success -> {
-                    hideProgressBar()
+                    hideNewsProgressBar()
                     val articles = it.data?.articles ?: emptyList()
                     topHeadlinesAdapter = TopHeadlinesAdapter(articles)
                     binding.recyclerViewTopHeadlines.adapter = topHeadlinesAdapter
@@ -132,12 +135,12 @@ class HomeFragment : Fragment() {
                 }
 
                 is NetworkResult.Error -> {
-                    showProgressBar()
+                    showNewsProgressBar()
                     showInfoDialog(it.message ?: "Something went wrong")
                 }
 
                 is NetworkResult.Loading -> {
-                    showProgressBar()
+                    showNewsProgressBar()
                     binding.recyclerViewTopHeadlines.visibility = View.GONE
                 }
             }
@@ -151,31 +154,34 @@ class HomeFragment : Fragment() {
 
                 is NetworkResult.Success -> {
 
-                    hideNewsTypeProgressBar()
+                    hideProgressBar()
                     val articles = it.data?.articles ?: emptyList()
                     val newsList: MutableList<NewsContract> = articles.toMutableList()
                     newsList.add(NewsViewAll(navigationIdentifier = "View All"))
-                    Log.e("list", "<<<<< ${it.data?.articles}")
+
+                  //  Log.e("list", "<<<<< ${it.data?.articles}")
+                    errorLog("<<<< ${it.data?.articles}")
+
                     topNewsAdapter = TopNewsAdapter(newsList)
-                    binding.recyclerViewNews.adapter = topNewsAdapter
-                    binding.recyclerViewNews.visibility = View.VISIBLE
+                    binding.apply {
+                        recyclerViewNews.adapter = topNewsAdapter
+                        recyclerViewNews.show()
+                    }
                     topNewsAdapter.apply {
                         onItemClickListener = {
                             findNavController().navigate(HomeFragmentDirections.actionHomeToEverythingFragment())
                         }
                     }
-
-
                 }
 
                 is NetworkResult.Error -> {
-                    showNewsTypeProgressBar()
+                    showProgressBar()
                     showInfoDialog(it.message ?: "Something went wrong")
                 }
 
                 is NetworkResult.Loading -> {
-                    showNewsTypeProgressBar()
-                    binding.recyclerViewNews.visibility = View.GONE
+                    showProgressBar()
+                    binding.recyclerViewNews.hide()
                 }
             }
         }
@@ -183,27 +189,27 @@ class HomeFragment : Fragment() {
 
 
     private fun showProgressBar() = binding.apply {
-        shimmerTopNewsLayout.visibility = View.VISIBLE
+        shimmerTopNewsLayout.show()
     }
 
     private fun hideProgressBar() = binding.apply {
-        shimmerTopNewsLayout.visibility = View.GONE
+        shimmerTopNewsLayout.hide()
     }
 
   private fun showNewsTypeProgressBar() = binding.apply {
-        shimmerNewsTypeLayout.visibility = View.VISIBLE
+        shimmerNewsTypeLayout.show()
     }
 
     private fun hideNewsTypeProgressBar() = binding.apply {
-        shimmerNewsTypeLayout.visibility = View.GONE
+        shimmerNewsTypeLayout.hide()
     }
 
     private fun showNewsProgressBar() = binding.apply {
-        shimmerNewsLayout.visibility = View.VISIBLE
+        shimmerNewsLayout.show()
 
     }
     private fun hideNewsProgressBar() = binding.apply {
-        shimmerNewsLayout.visibility = View.GONE
+        shimmerNewsLayout.hide()
     }
 
 

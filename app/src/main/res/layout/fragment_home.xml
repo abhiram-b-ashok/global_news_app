@@ -23,7 +23,7 @@
             android:layout_height="27dp"
             android:layout_marginEnd="14dp"
             android:contentDescription="@string/search_icon"
-            android:src="@drawable/ic_search"
+            android:src="@drawable/icons8_search"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,17 +61,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-<!--    <ProgressBar-->
-<!--        android:id="@+id/progress_top_news"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:indeterminateTint="@color/green"-->
-<!--        android:visibility="gone"-->
-<!--        />-->
+
     <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/shimmer_top_news_layout"
         android:layout_width="wrap_content"
@@ -146,7 +136,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/news_layout"
         android:layout_marginTop="20dp"
-        android:paddingBottom="50dp"
+        android:paddingBottom="100dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/news_type_filter_layout">
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -183,19 +173,6 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <ProgressBar-->
-<!--        android:id="@+id/progress_circular"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        android:indeterminateTint="@color/green"-->
-<!--        android:visibility="gone"-->
-<!--        />-->
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

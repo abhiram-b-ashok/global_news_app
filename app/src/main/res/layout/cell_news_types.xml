@@ -11,7 +11,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:background="@drawable/filter_news_shape"
         app:layout_constraintTop_toTopOf="parent"
-        android:textColor="@color/black"
+        android:textColor="#696969"
         android:id="@+id/typeButton"
         android:padding="7dp"
         tools:text = "General"/>

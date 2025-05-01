@@ -12,9 +12,11 @@ import com.example.newsapplication.data.preference.SharedPreferencesManager
 import com.example.newsapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 
+    //TODO
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()

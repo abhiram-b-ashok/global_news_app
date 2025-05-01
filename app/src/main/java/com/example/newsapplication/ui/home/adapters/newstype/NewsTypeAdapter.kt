@@ -39,7 +39,7 @@ class NewsTypeAdapter(private val newsTypeList: List<NewsTypeModel>) : RecyclerV
                     typeButton.setTextColor(Color.parseColor("WHITE"))
                 } else {
                     typeButton.setBackgroundResource(com.example.newsapplication.R.drawable.filter_news_shape)
-                    typeButton.setTextColor(Color.parseColor("BLACK"))
+                    typeButton.setTextColor(Color.parseColor("GRAY"))
                 }
                 root.setOnClickListener {
                     onTypeSelected?.invoke(adapterPosition,newsTypeModel)
