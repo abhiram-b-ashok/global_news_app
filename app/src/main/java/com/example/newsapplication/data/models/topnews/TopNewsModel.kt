@@ -1,6 +1,6 @@
 package com.example.newsapplication.data.models.topnews
 
-import android.util.Log
+
 import com.example.newsapplication.utils.EMPTY
 import com.example.newsapplication.utils.ZERO
 import com.example.newsapplication.utils.getStringOrNull
@@ -38,13 +38,13 @@ fun JSONArray?.toNewsModel(): newsList {
                 title = item?.optString("title") ?: EMPTY,
                 description = item?.getStringOrNull("description") ?: EMPTY,
                 image = item?.optString("urlToImage") ?: EMPTY,
-                author = item?.optJSONObject("source")?.getStringOrNull("name")?: EMPTY
+                source = item?.optJSONObject("source")?.getStringOrNull("name")?: EMPTY,
+                author = item?.getStringOrNull("author") ?: EMPTY
             )
         )
     }
     return list
 }
-
 
 interface NewsContract{
     fun provideViewType():Int
@@ -55,8 +55,8 @@ data class NewsModel(
     val title:String,
     val description:String,
     val image:String? = null,
-    val author:String? = null
-
+    val source:String? = null,
+    val author:String? = null,
 ):NewsContract {
     override fun provideViewType(): Int  = NEWS_ITEM_VIEW_TYPE
 }

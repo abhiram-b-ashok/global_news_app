@@ -43,7 +43,6 @@
             app:layout_constraintTop_toTopOf="@+id/newsImg"
             app:layout_constraintEnd_toStartOf="@+id/save_button"
             app:layout_constraintStart_toEndOf="@id/newsImg"
-            android:text="Jerry Jones says drafting Tyler Booker could help the Cowboys tush push this year - NBC Sports"
             android:ellipsize="end"
             />
         <TextView

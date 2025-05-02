@@ -31,11 +31,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="14dp"
-            android:fontFamily="@font/publicsans_extra_bold"
+            android:fontFamily="@font/poppins_bold"
             android:text="GLOBAL NEWS"
             android:textColor="@color/green"
             android:textSize="20sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/img_search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/img_search"
@@ -55,11 +54,11 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="Every Headlines Here"
+            android:text="@string/every_headlines_here"
             android:textSize="15sp"
+            android:fontFamily="@font/poppins_semi_bold"
             android:layout_marginStart="4dp"
             android:textColor="@color/black"
-            android:textStyle="bold"
             android:id="@+id/everything_heading"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -68,80 +67,6 @@
             android:layout_marginTop="10dp"
             android:orientation="vertical"
             android:paddingBottom="100dp"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/everything_recycler_view"

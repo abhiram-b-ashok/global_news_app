@@ -31,8 +31,12 @@
             app:itemIconTint="@drawable/bottom_navigation_item_selector"
             app:itemTextColor="@drawable/bottom_navigation_item_selector"
             app:labelVisibilityMode="labeled"
+            app:itemTextAppearanceActive="@font/poppins_semi_bold"
+            app:itemActiveIndicatorStyle="@color/white"
+            app:itemPaddingBottom="27dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/bottom_nav_menu" />
 

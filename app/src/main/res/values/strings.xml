@@ -22,4 +22,9 @@
     <string name="french">French</string>
     <string name="select_language">Select Language</string>
     <string name="news_image">News Image</string>
+    <string name="language">language</string>
+    <string name="country">country</string>
+    <string name="every_headlines_here">Every Headlines Here</string>
+    <string name="search_here">Search headlines here</string>
+    <string name="search">Search</string>
 </resources>

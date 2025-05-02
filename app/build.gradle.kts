@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -56,5 +57,8 @@ dependencies {
     implementation(libs.logging.interceptor)
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
 
 }

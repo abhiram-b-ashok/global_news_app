@@ -54,7 +54,7 @@
             android:layout_marginStart="8dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:fontFamily="@font/poppins_medium"
             app:layout_constraintEnd_toStartOf="@+id/save_button"
             app:layout_constraintStart_toEndOf="@id/img_Card"

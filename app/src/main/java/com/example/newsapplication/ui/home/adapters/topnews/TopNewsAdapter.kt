@@ -23,7 +23,7 @@ class TopNewsAdapter(
     inner class NewsItemViewHolder(
         private val binding: CellTopNewsItemBinding):ViewHolder(binding.root){
         fun onBinding(item:NewsModel) = binding.apply {
-            textTitle.text = item.author
+            textTitle.text = item.source
             textDescription.text = item.title
             textAuthor.text = item.author
             imgNews.loadAsyncImage(item.image)
