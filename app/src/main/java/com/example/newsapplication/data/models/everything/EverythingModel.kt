@@ -33,9 +33,9 @@ fun JSONObject?.toEverythingRootModel(): EverythingRootModel {
     )
 }
 
-fun JSONArray?.toEverythingModel(): List<EverythingModel>{
+fun JSONArray?.toEverythingModel(): List<EverythingModel> {
     val list = mutableListOf<EverythingModel>()
-    for (i in 0 until (this?.length() ?: 0)){
+    for (i in 0 until (this?.length() ?: 0)) {
         val item = this?.getJSONObject(i)
         list.add(
             EverythingModel(

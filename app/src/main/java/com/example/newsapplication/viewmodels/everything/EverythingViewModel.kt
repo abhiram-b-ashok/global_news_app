@@ -20,7 +20,6 @@ class EverythingViewModel(private val repository: EverythingRepository) : ViewMo
     val everythingLiveData: LiveData<NetworkResult<EverythingRootModel>> = everythingMutableLiveData
 
 
-
     private var everythingRootModel = EverythingRootModel(
         status = "",
         totalResults = 0,
@@ -28,20 +27,16 @@ class EverythingViewModel(private val repository: EverythingRepository) : ViewMo
     )
 
 
-
-     fun getEverything() = viewModelScope.launch {
+    fun getEverything() = viewModelScope.launch {
         everythingMutableLiveData.value = NetworkResult.Loading()
         val response = repository.getEverything()
 
-         if (response.exception != null) {
-             everythingMutableLiveData.value = NetworkResult.Error(response.message)
-         } else {
-             everythingRootModel =response.data.toEverythingRootModel()
-             everythingMutableLiveData.value = NetworkResult.Success(everythingRootModel)
+        if (response.exception != null) {
+            everythingMutableLiveData.value = NetworkResult.Error(response.message)
+        } else {
+            everythingRootModel = response.data.toEverythingRootModel()
+            everythingMutableLiveData.value = NetworkResult.Success(everythingRootModel)
 
-
-         }
+        }
     }
-
-
 }

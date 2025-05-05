@@ -87,6 +87,7 @@
             android:id="@+id/et_search"
             android:textColor="@color/black"
             android:textSize="13sp"
+            android:maxLines="1"
             app:layout_constraintBottom_toBottomOf="@+id/search_bar_icon"
             app:layout_constraintEnd_toStartOf="@+id/close_button"
             app:layout_constraintStart_toEndOf="@+id/search_bar_icon"

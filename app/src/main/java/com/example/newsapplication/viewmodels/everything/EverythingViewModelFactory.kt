@@ -11,5 +11,4 @@ class EverythingViewModelFactory(private val repository: EverythingRepository) :
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
-
 }
