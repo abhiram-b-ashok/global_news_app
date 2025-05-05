@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.newsapplication.R
+import com.example.newsapplication.data.models.everything.EverythingModel
+import com.example.newsapplication.data.models.everything.toEverythingModel
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.data.room_database.SavedNewsModel
 import com.example.newsapplication.databinding.FragmentEverythingBinding
@@ -27,6 +30,8 @@ import com.example.newsapplication.data.room_database.SavedNewsDatabase
 class EverythingFragment : Fragment() {
     private lateinit var binding: FragmentEverythingBinding
     private lateinit var savedNewsViewModel: SavedNewsViewModel
+    private var savedNews : List<SavedNewsModel> = listOf()
+
 
     private val viewModel by viewModels<EverythingViewModel>(factoryProducer = {
         EverythingViewModelFactory(
@@ -52,6 +57,10 @@ class EverythingFragment : Fragment() {
             val dao = SavedNewsDatabase.getDatabase(requireContext()).savedNewsDao()
             val factory = SavedNewsViewModelFactory(dao)
             savedNewsViewModel = ViewModelProvider(this@EverythingFragment, factory)[SavedNewsViewModel::class.java]
+            everythingAdapter.apply {
+                    checkSaved(savedNews)
+
+            }
 
         }
     }
@@ -66,38 +75,51 @@ class EverythingFragment : Fragment() {
                     everythingAdapter = EverythingAdapter(articles)
                     binding.everythingRecyclerView.adapter = everythingAdapter
                     binding.everythingRecyclerView.visibility = View.VISIBLE
+
                     everythingAdapter.apply {
+
                         onSaveClickListener = { item, position ->
 
-                            articles.forEachIndexed { index, it ->
-                                if (index == position) {
-                                    it.isSaved = !it.isSaved
+                            lifecycleScope.launch {
+                                articles.forEachIndexed { index, it ->
+                                    if (index == position) {
+                                        it.isSaved = !it.isSaved
+                                    }
                                 }
-                            }
-                            notifyItemChanged(position)
-                            Toast.makeText(
-                                this@EverythingFragment.context,
-                                "Saved",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                                notifyItemChanged(position)
+                                Toast.makeText(
+                                    this@EverythingFragment.context,
+                                    "Saved",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
 
-                            val savedModel = SavedNewsModel(
-                                title = item.title,
-                                urlToImage = item.urlToImage,
-                                publishedAt = item.publishedAt,
-                                url = item.url,
-                                isSaved = item.isSaved
-                            )
+                                val savedModel = SavedNewsModel(
+                                    title = item.title,
+                                    urlToImage = item.urlToImage,
+                                    publishedAt = item.publishedAt,
+                                    url = item.url,
+                                    isSaved = item.isSaved
+                                )
 
-                            if (item.isSaved) {
-                                savedNewsViewModel.saveNews(savedModel)
-                                Toast.makeText(context, "Saved", Toast.LENGTH_SHORT).show()
-                            } else {
-                                savedNewsViewModel.unSaveNews(savedModel)
-                                Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show()
+                                if (item.isSaved) {
+                                    savedNewsViewModel.saveNews(savedModel)
+                                    Log.e("saved", "$savedModel")
+                                } else {
+                                    savedNewsViewModel.unSaveNews(savedModel)
+                                    val newsToUnSave = savedNewsViewModel.getNewsByUrl(item.url ?: "")
+                                    if (newsToUnSave != null) {
+                                        savedNewsViewModel.unSaveNews(newsToUnSave)
+                                        Log.e("unsaved", "$newsToUnSave")
+                                    }
+                                    else {
+                                        Log.e("EverythingFragment", "Item not found in database for deletion")
+                                    }
+                                }
+
                             }
                         }
+
                     }
                 }
 

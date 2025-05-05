@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "saved_news")
 data class SavedNewsModel(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+
     val title: String,
     val urlToImage: String,
     val publishedAt: String,
-    val url: String,
-    var isSaved: Boolean = true
+    @PrimaryKey val url: String,
+    var isSaved: Boolean = false
 )

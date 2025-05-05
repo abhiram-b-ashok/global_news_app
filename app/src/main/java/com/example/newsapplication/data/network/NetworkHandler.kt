@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit
 
 const val SCHEME = "https"
 const val HOST = "newsapi.org"
-const val API_KEY = "236a356c9e8f4977aa2881ff261091e4"
+const val API_KEY = "5c6b5f5141ad431c9b142193ecd97e67"
 
 //for build http url ....
 fun buildUrl(

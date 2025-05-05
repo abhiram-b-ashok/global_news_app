@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsapplication.R
 import com.example.newsapplication.data.models.everything.EverythingModel
+import com.example.newsapplication.data.room_database.SavedNewsModel
 import com.example.newsapplication.databinding.CellEverythingItemsBinding
 import com.example.newsapplication.utils.loadCellImage
 import java.time.OffsetDateTime
@@ -54,4 +55,13 @@ class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Ad
             }
         }
 
-}}
+}
+fun checkSaved(saveList: List<SavedNewsModel>)
+{
+    val savedUrls = saveList.map { it.url }.toSet()
+    list.forEach { element ->
+        element.isSaved = savedUrls.contains(element.url)
+    }
+    notifyDataSetChanged()
+}
+}
