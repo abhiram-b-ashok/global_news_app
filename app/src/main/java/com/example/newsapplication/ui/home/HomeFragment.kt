@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -33,8 +34,10 @@ import com.example.newsapplication.viewmodels.home.HomeViewModel
 import com.example.newsapplication.viewmodels.home.HomeViewModelFactory
 import com.example.newsapplication.viewmodels.savedNews.SavedNewsViewModel
 import com.example.newsapplication.viewmodels.savedNews.SavedNewsViewModelFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class HomeFragment : Fragment() {
@@ -44,7 +47,8 @@ class HomeFragment : Fragment() {
     private lateinit var topHeadlinesAdapter: TopHeadlinesAdapter
     private lateinit var newsTypeAdapter: NewsTypeAdapter
     private var selectedCategory: String? = null
-    private lateinit var savedNewsViewModel : SavedNewsViewModel
+    private lateinit var savedNewsViewModel: SavedNewsViewModel
+    private var savedNews: List<SavedNewsModel> = listOf()
     private val viewModel by viewModels<HomeViewModel>(
         factoryProducer = {
             HomeViewModelFactory(HomeRepository())
@@ -63,25 +67,36 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val dao = SavedNewsDatabase.getDatabase(requireContext()).savedNewsDao()
         val factory = SavedNewsViewModelFactory(dao)
-        savedNewsViewModel = ViewModelProvider(this@HomeFragment, factory)[SavedNewsViewModel::class.java]
+        savedNewsViewModel =
+            ViewModelProvider(this@HomeFragment, factory)[SavedNewsViewModel::class.java]
 
         lifecycleScope.launch {
+            savedNews = withContext(Dispatchers.IO) {
+                savedNewsViewModel.getAllSavedNews()
+            }
             initViews()
             newsTypeLoad()
+
         }
+
+
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
-    private suspend fun newsTypeLoad()
-    {
+    private suspend fun newsTypeLoad() {
         showNewsTypeProgressBar()
         binding.recyclerViewNewsType.visibility = View.GONE
         delay(1000)
+        newsTypeList.forEachIndexed { index, item ->
+            item.isSelected = index == 0
+        }
         newsTypeAdapter = NewsTypeAdapter(newsTypeList)
         binding.recyclerViewNewsType.adapter = newsTypeAdapter.apply {
+
             onTypeSelected = { position, item ->
                 item.isSelected = true
 
@@ -94,6 +109,7 @@ class HomeFragment : Fragment() {
                 newsTypeAdapter.notifyDataSetChanged()
                 viewModel.getTopHeadlines(selectedCategory)
             }
+
 
         }
         hideNewsTypeProgressBar()
@@ -116,6 +132,7 @@ class HomeFragment : Fragment() {
         viewModel.getTopHeadlines(selectedCategory)
         viewModel.getTopNews()
     }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun observeTopHeadLines() {
         viewModel.topHeadLinesLiveData.observe(viewLifecycleOwner) {
@@ -124,21 +141,22 @@ class HomeFragment : Fragment() {
                 is NetworkResult.Success -> {
                     hideNewsProgressBar()
                     val articles = it.data?.articles ?: emptyList()
+                    val savedUrls = savedNews.map { it.url }.toSet()
+                    articles.forEach { article ->
+                        article.isSaved = savedUrls.contains(article.url)
+                    }
                     topHeadlinesAdapter = TopHeadlinesAdapter(articles)
                     binding.recyclerViewTopHeadlines.adapter = topHeadlinesAdapter
                     binding.recyclerViewTopHeadlines.visibility = View.VISIBLE
                     topHeadlinesAdapter.apply {
-                        itemOnclickListener = {
-                            Log.e("yugygb","ihik")
-                        }
+
                         onSavedClickListener = { position, item ->
                             lifecycleScope.launch {
-                                articles.forEachIndexed{
-                                        index, element ->
-                                    if (index == position){
-                                        element.isSaved = !element.isSaved
-                                    }
-                                }
+
+                                item.isSaved = !item.isSaved
+                                topHeadlinesAdapter.notifyItemChanged(position)
+                                notifyItemChanged(position)
+
                                 notifyItemChanged(position)
                                 val savedModel = SavedNewsModel(
                                     title = item.title,
@@ -154,18 +172,29 @@ class HomeFragment : Fragment() {
                                 } else {
 
                                     savedNewsViewModel.unSaveNews(savedModel)
-                                    val newsToUnSave = savedNewsViewModel.getNewsByUrl(item.url ?: "")
+                                    val newsToUnSave =
+                                        savedNewsViewModel.getNewsByUrl(item.url ?: "")
                                     if (newsToUnSave != null) {
                                         savedNewsViewModel.unSaveNews(newsToUnSave)
                                         Log.e("unsaved", "$newsToUnSave")
-                                    }
-                                    else {
-                                        Log.e("HomeFragment", "Item not found in database for deletion")
+                                    } else {
+                                        Log.e(
+                                            "HomeFragment",
+                                            "Item not found in database for deletion"
+                                        )
                                     }
                                 }
                             }
 
                         }
+                        itemOnclickListener = {
+                            findNavController().navigate(
+                                HomeFragmentDirections.actionHomeToWebViewFragment(
+                                    it.url ?: ""
+                                )
+                            )
+                        }
+
 
                     }
 
@@ -196,7 +225,7 @@ class HomeFragment : Fragment() {
                     val newsList: MutableList<NewsContract> = articles.toMutableList()
                     newsList.add(NewsViewAll(navigationIdentifier = "View All"))
 
-                  //  Log.e("list", "<<<<< ${it.data?.articles}")
+                    //  Log.e("list", "<<<<< ${it.data?.articles}")
                     errorLog("<<<< ${it.data?.articles}")
 
                     topNewsAdapter = TopNewsAdapter(newsList)
@@ -233,7 +262,7 @@ class HomeFragment : Fragment() {
         shimmerTopNewsLayout.hide()
     }
 
-  private fun showNewsTypeProgressBar() = binding.apply {
+    private fun showNewsTypeProgressBar() = binding.apply {
         shimmerNewsTypeLayout.show()
     }
 
@@ -245,6 +274,7 @@ class HomeFragment : Fragment() {
         shimmerNewsLayout.show()
 
     }
+
     private fun hideNewsProgressBar() = binding.apply {
         shimmerNewsLayout.hide()
     }

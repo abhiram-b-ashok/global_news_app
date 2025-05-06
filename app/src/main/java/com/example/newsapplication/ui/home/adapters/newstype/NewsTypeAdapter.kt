@@ -50,4 +50,12 @@ class NewsTypeAdapter(private val newsTypeList: List<NewsTypeModel>) : RecyclerV
 
         }
     }
+    fun updateList(newList: List<NewsTypeModel>) {
+        (newsTypeList as? MutableList)?.apply {
+            clear()
+            addAll(newList)
+            notifyDataSetChanged()
+        }
+    }
 }
+

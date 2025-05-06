@@ -9,6 +9,7 @@
     tools:context=".ui.home.HomeFragment">
 
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_tool_bar"
         android:layout_width="0dp"

@@ -1,8 +1,10 @@
 package com.example.newsapplication.ui.settings.bottom_sheet_dialog.adapters
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsapplication.R
 import com.example.newsapplication.data.models.countries.CountryModel
 import com.example.newsapplication.databinding.CellCountryBinding
 
@@ -28,6 +30,15 @@ class CountryAdapter(private val list: List<CountryModel>) : RecyclerView.Adapte
         fun bind(countryModel: CountryModel, onCountryClicked: ((CountryModel) -> Unit)?)  {
             binding.apply {
                 countryName.text = countryModel.countryName
+
+                if (countryModel.isSelected) {
+                    countryName.setBackgroundResource(R.drawable.bottom_sheet_selected_items_border)
+                    countryName.setTextColor(Color.parseColor("RED"))
+                }
+                else{
+                    countryName.setBackgroundResource(R.drawable.bottom_sheet_items_border)
+                    countryName.setTextColor(Color.parseColor("GRAY"))
+                }
                 root.setOnClickListener {
                     onCountryClicked?.invoke(countryModel)
                 }

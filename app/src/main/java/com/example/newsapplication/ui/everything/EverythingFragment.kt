@@ -6,11 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.newsapplication.data.network.NetworkResult
 import com.example.newsapplication.data.room_database.SavedNewsModel
 import com.example.newsapplication.databinding.FragmentEverythingBinding
@@ -22,6 +22,8 @@ import com.example.newsapplication.viewmodels.savedNews.SavedNewsViewModel
 import com.example.newsapplication.viewmodels.savedNews.SavedNewsViewModelFactory
 import kotlinx.coroutines.launch
 import com.example.newsapplication.data.room_database.SavedNewsDatabase
+import com.example.newsapplication.utils.hide
+import com.example.newsapplication.utils.show
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -113,12 +115,16 @@ class EverythingFragment : Fragment() {
 
                             }
                         }
+                        onItemClickListener = {
+                            findNavController().navigate(EverythingFragmentDirections.actionEverythingFragmentToWebViewFragment(it.url ?: ""))
+                        }
+
 
                     }
                 }
 
                 is NetworkResult.Error -> {
-                    hideProgressBar()
+                    showProgressBar()
                 }
 
                 is NetworkResult.Loading -> {
@@ -130,11 +136,11 @@ class EverythingFragment : Fragment() {
     }
 
     private fun showProgressBar() = binding.apply {
-        progressCircular.visibility = View.VISIBLE
-    }
+        shimmerNewsLayout.show()
 
+    }
     private fun hideProgressBar() = binding.apply {
-        progressCircular.visibility = View.GONE
+        shimmerNewsLayout.hide()
     }
 
 

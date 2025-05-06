@@ -14,7 +14,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Adapter<EverythingAdapter.EverythingViewHolder> () {
-    //    var onItemClickListener: ((EverythingModel) -> Unit)? = null
+    var onItemClickListener: ((EverythingModel) -> Unit)? = null
     var onSaveClickListener: ((EverythingModel, Int) -> Unit)? = null
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EverythingViewHolder {
         val binding =
@@ -23,7 +23,7 @@ class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: EverythingViewHolder, position: Int) {
-        holder.bind(list[position], onSaveClickListener)
+        holder.bind(list[position], onSaveClickListener, onItemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +33,7 @@ class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Ad
     class EverythingViewHolder(val binding: CellEverythingItemsBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: EverythingModel, onSaveClickListener: ((EverythingModel, Int) -> Unit)?) {
+        fun bind(item: EverythingModel, onSaveClickListener: ((EverythingModel, Int) -> Unit)?, onItemClickListener: ((EverythingModel) -> Unit)?) {
             binding.apply {
                 title.text = item.title
                 val rawDate = item.publishedAt
@@ -51,6 +51,10 @@ class EverythingAdapter(private val list: List<EverythingModel>):RecyclerView.Ad
                 saveButton.setOnClickListener {
                     onSaveClickListener?.invoke(item, adapterPosition)
                 }
+                root.setOnClickListener {
+                    onItemClickListener?.invoke(item)
+                }
+
 
 
             }

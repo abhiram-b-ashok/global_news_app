@@ -1,6 +1,7 @@
 package com.example.newsapplication.ui.settings.bottom_sheet_dialog
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: LanguageBottomSheetBinding
     private lateinit var adapter: LanguageAdapter
     var onLanguageSelected: ((LanguageModel) -> Unit)? = null
+//    private var languagePreferences = this@LanguageBottomSheet.requireActivity().getSharedPreferences("language", Context.MODE_PRIVATE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,11 +25,12 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
         return binding.root
     }
 
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val languageList = arrayListOf(
-            LanguageModel("English", "en", true),
+            LanguageModel("English", "en"),
             LanguageModel("Arabic", "ar"),
             LanguageModel("French", "fr"),
             LanguageModel("German", "de"),
@@ -43,15 +46,23 @@ class LanguageBottomSheet : BottomSheetDialogFragment() {
             LanguageModel("Demur", "ud")
         )
 
+        val previouslySelectedLanguage = this@LanguageBottomSheet.requireActivity().getSharedPreferences("language", Context.MODE_PRIVATE).getString("languageName", "English")
         adapter = LanguageAdapter(languageList)
         binding.languagesRecycler.adapter = adapter
+        languageList.forEach {
+            if (it.languageName == previouslySelectedLanguage) {
+                it.isSelected = true
+            }
+        }
         adapter.onItemClicked = { selectedLanguage ->
             languageList.forEach {
                 it.isSelected = it == selectedLanguage
+
             }
             adapter.notifyDataSetChanged()
             onLanguageSelected?.invoke(selectedLanguage)
             dismiss()
         }
+
     }
 }

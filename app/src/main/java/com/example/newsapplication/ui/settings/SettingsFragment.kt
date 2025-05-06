@@ -42,7 +42,7 @@ class SettingsFragment : Fragment() {
             countryBottomSheet.show(parentFragmentManager, "countryBottomSheet")
             countryBottomSheet.onCountrySelected = { selected ->
                 binding.etDropdownCountry.setText(selected.countryName)
-                countryPreferences.edit().putString("country", selected.countryName).apply()
+                countryPreferences.edit().putString("countryName", selected.countryName).apply()
                 languagePreferences.edit().putString("countryCode", selected.countryCode).apply()
             }
         }

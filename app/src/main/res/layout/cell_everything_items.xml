@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
         <androidx.cardview.widget.CardView
             android:layout_width="70dp"
@@ -54,6 +55,7 @@
             android:layout_marginStart="8dp"
             android:ellipsize="end"
             android:maxLines="2"
+            android:textColor="@color/black"
             android:textSize="14sp"
             android:fontFamily="@font/poppins_medium"
             app:layout_constraintEnd_toStartOf="@+id/save_button"

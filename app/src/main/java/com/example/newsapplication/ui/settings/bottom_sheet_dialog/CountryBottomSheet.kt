@@ -1,6 +1,7 @@
 package com.example.newsapplication.ui.settings.bottom_sheet_dialog
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ class CountryBottomSheet : BottomSheetDialogFragment() {
     private lateinit var binding: CountryBottomSheetBinding
     private lateinit var countryAdapter: CountryAdapter
     var onCountrySelected: ((CountryModel) -> Unit)? = null
+//    private var countryPreferences = this@CountryBottomSheet.requireActivity()
+//        .getSharedPreferences("country", Context.MODE_PRIVATE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +25,7 @@ class CountryBottomSheet : BottomSheetDialogFragment() {
         binding = CountryBottomSheetBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
+
     @SuppressLint("NotifyDataSetChanged")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -77,21 +81,26 @@ class CountryBottomSheet : BottomSheetDialogFragment() {
             CountryModel("South Africa", "za"),
             CountryModel("United States", "us"),
             CountryModel("Venezuela", "ve")
-            )
+        )
 
-
+        val previouslySelectedCountry = this@CountryBottomSheet.requireActivity().getSharedPreferences("country", Context.MODE_PRIVATE).getString("countryName", "United States")
         countryAdapter = CountryAdapter(countryList)
-        binding.countriesRecycler.adapter = countryAdapter.apply {
-            onCountryClicked = { selectedCountry ->
-                countryList.forEach {
-                    it.isSelected = it == selectedCountry
-                }
-                countryAdapter.notifyDataSetChanged()
-                onCountrySelected?.invoke(selectedCountry)
-                dismiss()
+        binding.countriesRecycler.adapter = countryAdapter
+        countryList.forEach {
+            if (it.countryName == previouslySelectedCountry) {
+                it.isSelected = true
             }
+        }
 
+        countryAdapter.onCountryClicked = { selectedCountry ->
+            countryList.forEach {
+                it.isSelected = it == selectedCountry
+            }
+            countryAdapter.notifyDataSetChanged()
+            onCountrySelected?.invoke(selectedCountry)
+            dismiss()
         }
 
     }
+
 }

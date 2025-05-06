@@ -50,15 +50,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation (libs.androidx.navigation.fragment.ktx)
-    implementation ("androidx.navigation:navigation-ui-ktx:2.8.9")
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.9")
     implementation(libs.material)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
     implementation("androidx.room:room-runtime:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.webkit:webkit:1.8.0")
+
 
 }
