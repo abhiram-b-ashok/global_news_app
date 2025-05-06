@@ -23,6 +23,10 @@ interface SavedNewsDao {
     @Query("SELECT * FROM saved_news WHERE url = :url")
     suspend fun getNewsByUrl(url: String): SavedNewsModel?
 
+    @Query("SELECT * FROM saved_news")
+    suspend fun getAllSavedNews(): List<SavedNewsModel>
+
+
 
 
 }

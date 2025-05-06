@@ -35,6 +35,10 @@ class SavedNewsViewModel(private val dao: SavedNewsDao) : ViewModel() {
         }
     }
 
+    suspend fun getAllSavedNews(): List<SavedNewsModel> {
+        return dao.getAllSavedNews()
+    }
+
      suspend fun getNewsByUrl(url: String): SavedNewsModel? {
         return dao.getNewsByUrl(url)
     }
